@@ -1,10 +1,8 @@
-#include "Main.h"
 #include <SFML/Graphics.hpp>
 
-
-Main::Main()
+int main(int argc, char** argv[])
 {
-	sf::RenderWindow window(sf::VideoMode(640, 480), "The Window");
+	sf::RenderWindow window(sf::VideoMode(640, 480), "Boop");
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -13,13 +11,7 @@ Main::Main()
 				window.close();
 			}
 		}
-
 		window.clear(sf::Color::Black);
 		window.display();
 	}
-}
-
-
-Main::~Main()
-{
 }
