@@ -11,7 +11,13 @@ int main(int argc, char** argv[])
 				window.close();
 			}
 		}
+
+		sf::RectangleShape rect = sf::RectangleShape(sf::Vector2f(200, 170));
+		rect.setFillColor(sf::Color(255, 190, 210, 255));
+		rect.setPosition(100, 100);
+
 		window.clear(sf::Color::Black);
+		window.draw(rect);
 		window.display();
 	}
 }
