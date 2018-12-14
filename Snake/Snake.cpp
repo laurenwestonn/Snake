@@ -66,9 +66,8 @@ void Snake::Extend()
 	if (m_snakeBody.empty())
 		return;
 
-	sf::Vector2i tailHeadPos = m_snakeBody.back().position();
-	//sf::Vector2i tailHeadPos= m_snakeBody[m_snakeBody.size() - 1]; should be same as above.
-	sf::Vector2i upperTailPos = m_snakeBody[m_snakeBody.size() - 2];
+	sf::Vector2i tailHeadPos = m_snakeBody[m_snakeBody.size() - 1].position;
+	sf::Vector2i upperTailPos = m_snakeBody[m_snakeBody.size() - 2].position;
 
 	// If we have a body and a tail, find new body from this
 	if (m_snakeBody.size() > 1) {
@@ -127,12 +126,31 @@ void Snake::Reset()
 
 void Snake::Move()
 {
+	// Move up body parts to be in the position in front
+	for (int i = m_snakeBody.size() - 1; i > 0; i--) {
+		m_snakeBody[i].position = m_snakeBody[i - 1].position;
+	}
 
+	// Move head in direction the snake is going in
+	if (m_dir == Direction::Up) {
+		--m_snakeBody[0].position.y;
+	}
+	else if (m_dir == Direction::Right) {
+		++m_snakeBody[0].position.x;
+	}
+	else if (m_dir == Direction::Down) {
+		++m_snakeBody[0].position.y;
+	}
+	else if (m_dir == Direction::Left) {
+		--m_snakeBody[0].position.x;
+
+
+	}
 }
 
 void Snake::Tick()
 {
-	if (m_snakeBody.empty || (m_dir == Direction::None))
+	if (m_snakeBody.empty() || m_dir == Direction::None)
 		return;
 
 	Move();
@@ -150,4 +168,10 @@ void Snake::Render(sf::RenderWindow & l_window)
 
 void Snake::CheckCollision()
 {
+	if (m_snakeBody.size() < 5)	// too small for self collision
+		return;
+
+	//SnakeSegment head = m_snakeBody.front();
+
+	//for (int i = m_snakeBody.size(); )
 }
