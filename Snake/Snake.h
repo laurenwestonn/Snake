@@ -1,12 +1,12 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 
+using SnakeContainer = std::vector<SnakeSegment>;
+
 struct SnakeSegment {
 	SnakeSegment(int x, int y) : position(x,y) {}
 	sf::Vector2i position;
 };
-
-using SnakeContainer = std::vector<SnakeSegment>;
 
 enum class Direction {
 	None,
@@ -30,9 +30,9 @@ public:
 	sf::Vector2i GetPosition();
 	bool HasLost();
 
-	void IncreaseScore();
-	void Lose();
 	void ToggleLost();
+	void Lose();
+	void IncreaseScore();
 
 	void Extend();	// Grow snake
 	void Reset();	// To starting position
