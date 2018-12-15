@@ -180,6 +180,8 @@ void Snake::Render(sf::RenderWindow & l_window)
 	m_bodyRect.setFillColor(sf::Color::Yellow);
 	m_bodyRect.setPosition(head->position.x * m_size, head->position.y * m_size);
 
+
+	printf("Draw snake at %d, %d\n\n\n", m_snakeBody.front().position.x, m_snakeBody.front().position.y);
 	l_window.draw(m_bodyRect);
 
 	m_bodyRect.setFillColor(sf::Color::Green);
@@ -194,7 +196,7 @@ void Snake::CheckCollision()
 	if (m_snakeBody.size() < 5)	// too small for self collision
 		return;
 
-	for (auto itr = m_snakeBody.begin() + 1; itr != m_snakeBody.begin(); ++itr) {
+	for (auto itr = m_snakeBody.begin() + 1; itr != m_snakeBody.end(); ++itr) {
 		if (itr->position == GetPosition()) {
 			int segments = m_snakeBody.end() - itr; // no. of pieces to cut (from hit to tail)
 			Cut(segments);

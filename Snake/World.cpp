@@ -1,11 +1,10 @@
 #include "World.h"
 
 
-World::World(sf::Vector2u l_windowSize)
+World::World(sf::Vector2u l_windowSize, int l_blockSize)
 {
-	m_blockSize = 16;
+	m_blockSize = l_blockSize;
 	m_windowSize = l_windowSize;
-	m_appleShape.setOrigin(m_blockSize / 2, m_blockSize / 2);
 	m_appleShape.setRadius(m_blockSize / 2);
 	m_appleShape.setFillColor(sf::Color::Red);
 
@@ -63,7 +62,7 @@ void World::Update(Snake& l_player)
 	}
 }
 
-void World::Render(sf::RenderWindow l_window)
+void World::Render(sf::RenderWindow &l_window)
 {
 	for (int i = 0; i < 4; i++) {
 		l_window.draw(m_bounds[i]);

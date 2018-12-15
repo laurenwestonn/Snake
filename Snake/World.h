@@ -4,14 +4,14 @@
 class World
 {
 public:
-	World(sf::Vector2u l_windowSize);
+	World(sf::Vector2u l_windowSize, int l_blockSize);
 	~World();
 
 	int GetBlockSize();
 	void RespawnApple();
 
 	void Update(Snake& l_player);
-	void Render(sf::RenderWindow l_window);
+	void Render(sf::RenderWindow &l_window);
 	sf::Vector2i GetItemPosition();
 
 private:

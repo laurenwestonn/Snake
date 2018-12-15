@@ -1,14 +1,7 @@
 #include "Game.h"
 
-Game::Game(): m_window("Chapter 2", sf::Vector2u(800,600))
+Game::Game() : m_window("Snake", sf::Vector2u(800, 600)), m_snake(20), m_world(sf::Vector2u(800,600), 20)
 {
-	if (!m_santaTexture.loadFromFile("santa.jpg"))
-		printf("Can't load the file");
-	m_santa.setOrigin(m_santaTexture.getSize().x / 2, m_santaTexture.getSize().y / 2);
-	m_santa.setPosition(200, 300);
-	m_santa.setTexture(m_santaTexture);
-
-	m_increment = sf::Vector2f(400, 400);
 }
 
 
@@ -18,51 +11,50 @@ Game::~Game()
 
 void Game::HandleInput()
 {
-	//Nothing for now
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_snake.GetDirection() != Direction::Down)
+		m_snake.SetDirection(Direction::Up);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && m_snake.GetDirection() != Direction::Right)
+		m_snake.SetDirection(Direction::Left);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_snake.GetDirection() != Direction::Left)
+		m_snake.SetDirection(Direction::Right);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_snake.GetDirection() != Direction::Up)
+		m_snake.SetDirection(Direction::Down);
 }
 
 void Game::Update()
 {
+	float timestep = 1.0f / m_snake.GetSpeed();
+
+	if (m_elapsed.asSeconds() >= timestep) {
+		m_snake.Tick();
+		m_world.Update(m_snake);
+		m_elapsed -= sf::seconds(timestep);
+		if (m_snake.HasLost()) {
+			m_snake.Reset();
+		}
+	}
 	m_window.Update();
-	MoveSanta();
 }
 
 void Game::Render()
 {
 	m_window.BeginDraw();
-	m_window.Draw(m_santa);
+	m_snake.Render(*m_window.GetRenderWindow());
+	m_world.Render(*m_window.GetRenderWindow());
 	m_window.EndDraw();
 }
 
-void Game::UpdateClock()
+void Game::RestartClock()
 {
-	m_deltaSeconds = clock.restart().asSeconds();
+	m_elapsed += clock.restart();
 }
 
-float Game::GetDeltaSeconds()
+sf::Time Game::GetElapsed()
 {
-	return m_deltaSeconds;
+	return m_elapsed;
 }
 
 Window* Game::GetWindow()
 {
 	return &m_window;
-}
-
-void Game::MoveSanta()
-{
-	sf::Vector2u l_windSize = m_window.GetWindowSize();
-	sf::Vector2u l_textSize = m_santaTexture.getSize();
-
-	if ((m_santa.getPosition().x - (l_textSize.x / 2.0) + (m_increment.x * m_deltaSeconds) < 0)
-		|| (m_santa.getPosition().x + (l_textSize.x / 2.0) + (m_increment.x* m_deltaSeconds) > l_windSize.x))
-		m_increment.x = -m_increment.x;
-
-	if ((m_santa.getPosition().y - (l_textSize.y / 2.0) + (m_increment.y * m_deltaSeconds) < 0)
-		|| (m_santa.getPosition().y + (l_textSize.y / 2.0) + (m_increment.y * m_deltaSeconds) > l_windSize.y))
-		m_increment.y = -m_increment.y;
-
-	m_santa.setPosition(
-		m_santa.getPosition().x + m_increment.x * m_deltaSeconds,
-		m_santa.getPosition().y + m_increment.y * m_deltaSeconds);
 }

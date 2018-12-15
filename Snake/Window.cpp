@@ -69,6 +69,11 @@ void Window::Draw(sf::Drawable & l_drawable)
 	m_window.draw(l_drawable);
 }
 
+sf::RenderWindow * Window::GetRenderWindow()
+{
+	return &m_window;
+}
+
 void Window::Setup(const std::string & l_title, const sf::Vector2u & l_size)
 {
 	m_windowTitle = l_title;
