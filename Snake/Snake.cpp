@@ -160,10 +160,33 @@ void Snake::Tick()
 
 void Snake::Cut(int l_segment)
 {
+	for (int i = 0; i < l_segment; i++) {
+		m_snakeBody.pop_back();
+	}
+	m_lives--;
+	if (m_lives == 0) {
+		Lose();
+		return;
+	}
 }
 
 void Snake::Render(sf::RenderWindow & l_window)
 {
+	if (m_snakeBody.empty())
+		return;
+
+	auto head = m_snakeBody.begin();
+
+	m_bodyRect.setFillColor(sf::Color::Yellow);
+	m_bodyRect.setPosition(head->position.x * m_size, head->position.y * m_size);
+
+	l_window.draw(m_bodyRect);
+
+	m_bodyRect.setFillColor(sf::Color::Green);
+	for (auto itr = m_snakeBody.begin() + 1; itr != m_snakeBody.end(); ++itr) {
+		m_bodyRect.setPosition(itr->position.x * m_size, itr->position.y * m_size);
+		l_window.draw(m_bodyRect);
+	}
 }
 
 void Snake::CheckCollision()
@@ -171,7 +194,11 @@ void Snake::CheckCollision()
 	if (m_snakeBody.size() < 5)	// too small for self collision
 		return;
 
-	//SnakeSegment head = m_snakeBody.front();
-
-	//for (int i = m_snakeBody.size(); )
+	for (auto itr = m_snakeBody.begin() + 1; itr != m_snakeBody.begin(); ++itr) {
+		if (itr->position == GetPosition()) {
+			int segments = m_snakeBody.end() - itr; // no. of pieces to cut (from hit to tail)
+			Cut(segments);
+			break;
+		}
+	}
 }
