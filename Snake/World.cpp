@@ -55,9 +55,8 @@ void World::Update(Snake& l_player)
 		l_player.IncreaseScore();
 		RespawnApple();
 	}
-
-	if (l_player.GetPosition().x < 1 || l_player.GetPosition().x / m_blockSize > (m_windowSize.x / m_blockSize - 1)
-		|| l_player.GetPosition().y < 1 || l_player.GetPosition().y / m_blockSize > (m_windowSize.y / m_blockSize - 1)) {
+	if (l_player.GetPosition().x < 1 || l_player.GetPosition().x > (m_windowSize.x / m_blockSize - 2)
+		|| l_player.GetPosition().y < 1 || l_player.GetPosition().y > (m_windowSize.y / m_blockSize - 2)) {
 		l_player.Lose();
 	}
 }

@@ -50,10 +50,13 @@ bool Snake::HasLost()
 void Snake::IncreaseScore()
 {
 	m_score += 10;
+	m_speed += 5;
 }
 
 void Snake::Lose()
 {
+	ToggleLost();
+	Reset();
 }
 
 void Snake::ToggleLost()
@@ -119,7 +122,7 @@ void Snake::Reset()
 
 	SetDirection(Direction::None);
 	m_lives = 3;
-	m_speed = 15;
+	m_speed = 5;
 	m_score = 0;
 	m_lost = false;
 }
@@ -143,8 +146,6 @@ void Snake::Move()
 	}
 	else if (m_dir == Direction::Left) {
 		--m_snakeBody[0].position.x;
-
-
 	}
 }
 
@@ -164,6 +165,7 @@ void Snake::Cut(int l_segment)
 		m_snakeBody.pop_back();
 	}
 	m_lives--;
+	printf("%d lives remaining.", m_lives);
 	if (m_lives == 0) {
 		Lose();
 		return;
@@ -181,7 +183,6 @@ void Snake::Render(sf::RenderWindow & l_window)
 	m_bodyRect.setPosition(head->position.x * m_size, head->position.y * m_size);
 
 
-	printf("Draw snake at %d, %d\n\n\n", m_snakeBody.front().position.x, m_snakeBody.front().position.y);
 	l_window.draw(m_bodyRect);
 
 	m_bodyRect.setFillColor(sf::Color::Green);
