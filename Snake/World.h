@@ -11,7 +11,7 @@ public:
 	void RespawnApple();
 
 	void Update(Snake& l_player);
-	void Render(sf::RenderWindow &l_window);
+	void Render(sf::RenderWindow &l_window, int lives);
 	sf::Vector2i GetItemPosition();
 
 private:
@@ -21,5 +21,6 @@ private:
 
 	sf::RectangleShape m_bounds[4];
 	sf::CircleShape m_appleShape;
+	sf::CircleShape m_livesShape;
 };
 

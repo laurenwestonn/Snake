@@ -40,7 +40,7 @@ void Game::Render()
 {
 	m_window.BeginDraw();
 	m_snake.Render(*m_window.GetRenderWindow());
-	m_world.Render(*m_window.GetRenderWindow());
+	m_world.Render(*m_window.GetRenderWindow(), m_snake.getLives());
 	m_window.EndDraw();
 }
 

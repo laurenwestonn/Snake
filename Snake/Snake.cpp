@@ -165,6 +165,7 @@ void Snake::Cut(int l_segment)
 		m_snakeBody.pop_back();
 	}
 	m_lives--;
+	m_speed = 5;
 	printf("%d lives remaining.", m_lives);
 	if (m_lives == 0) {
 		Lose();

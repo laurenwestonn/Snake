@@ -7,9 +7,13 @@ World::World(sf::Vector2u l_windowSize, int l_blockSize)
 	m_windowSize = l_windowSize;
 	m_appleShape.setRadius(m_blockSize / 2);
 	m_appleShape.setFillColor(sf::Color::Red);
+	m_livesShape.setRadius(m_blockSize / 2 - 2);
+	m_livesShape.setFillColor(sf::Color(255, 0, 50));
+	m_livesShape.setPosition(l_windowSize.x - m_blockSize, 0);
 
 	RespawnApple();
 
+	// Set the bounds rectangles
 	for (int i = 0; i < 4; i++) {
 		m_bounds[i].setFillColor(sf::Color(150, 0, 0));
 
@@ -61,10 +65,22 @@ void World::Update(Snake& l_player)
 	}
 }
 
-void World::Render(sf::RenderWindow &l_window)
+void World::Render(sf::RenderWindow &l_window, int lives)
 {
 	for (int i = 0; i < 4; i++) {
 		l_window.draw(m_bounds[i]);
 	}
 	l_window.draw(m_appleShape);
+
+	for (int i = lives; i >= 1; i--) {
+		l_window.draw(m_livesShape);
+		m_livesShape.move(sf::Vector2f(-m_blockSize, 0));
+	}
+	m_livesShape.setPosition(l_window.getSize().x - m_blockSize, 0);
+
+}
+
+sf::Vector2i World::GetItemPosition()
+{
+	return m_item;
 }
