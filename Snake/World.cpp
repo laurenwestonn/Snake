@@ -47,7 +47,8 @@ void World::RespawnApple()
 {
 	int columns = m_windowSize.x / m_blockSize - 2;
 	int rows = m_windowSize.y / m_blockSize - 2;
-
+	
+	srand(time(nullptr));
 	m_item = sf::Vector2i(rand() % columns + 1, rand() % rows + 1);
 	m_appleShape.setPosition(m_item.x * m_blockSize, m_item.y * m_blockSize);
 }

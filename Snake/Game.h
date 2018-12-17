@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "Snake.h"
 #include "World.h"
+#include "Textbox.h"
 #include <SFML/Graphics.hpp>
 
 class Game
@@ -27,5 +28,6 @@ private:
 
 	World m_world;
 	Snake m_snake;
+	Textbox m_textbox;
 };
 
