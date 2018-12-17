@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include "Textbox.h"
 
 struct SnakeSegment {
 	SnakeSegment(int x, int y) : position(x,y) {}
@@ -19,7 +20,7 @@ enum class Direction {
 class Snake
 {
 public:
-	Snake(int l_blockSize);
+	Snake(int l_blockSize, Textbox *l_textbox);
 	~Snake();
 
 	void SetDirection(Direction l_dir);
@@ -56,5 +57,7 @@ private:
 	int m_speed;
 	bool m_lost;
 	sf::RectangleShape m_bodyRect;
+
+	Textbox* m_textbox;
 };
 

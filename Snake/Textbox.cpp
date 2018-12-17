@@ -19,7 +19,7 @@ void Textbox::Setup(int l_visible, int l_charSize, int l_width, sf::Vector2f l_s
 
 	sf::Vector2f l_padding(2.0f, 2.0f);
 
-	m_font.loadFromFile("arial.tff");
+	m_font.loadFromFile("fonts\\films.Dynasty.ttf");
 	m_content.setFont(m_font);
 	m_content.setCharacterSize(l_charSize);
 	m_content.setString("");

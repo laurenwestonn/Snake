@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game() : m_window("Snake", sf::Vector2u(800, 600)), m_snake(20), m_world(sf::Vector2u(800,600), 20)
+Game::Game() : m_window("Snake", sf::Vector2u(800, 600)), m_snake(20, &m_textbox), m_world(sf::Vector2u(800,600), 20)
 {
 }
 

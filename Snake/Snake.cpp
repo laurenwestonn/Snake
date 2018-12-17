@@ -1,8 +1,9 @@
 #include "Snake.h"
 
-Snake::Snake(int l_blockSize)
+Snake::Snake(int l_blockSize, Textbox *l_textbox)
 {
 	m_size = l_blockSize;
+	m_textbox = l_textbox;
 	m_bodyRect.setSize(sf::Vector2f(m_size - 1, m_size - 1));
 	Reset(); //starting position
 }
@@ -75,10 +76,12 @@ void Snake::IncreaseScore()
 {
 	m_score += 10;
 	m_speed += 5;
+	m_textbox->Add("Woohoo score is now " + std::to_string((long long)m_score) + " and the speed is " + std::to_string((long long)m_speed) + ".");
 }
 
 void Snake::Lose()
 {
+	m_textbox->Add("Game over! Score was " + std::to_string((long long)m_score));
 	ToggleLost();
 	Reset();
 }
@@ -189,8 +192,8 @@ void Snake::Cut(int l_segment)
 		m_snakeBody.pop_back();
 	}
 	m_lives--;
-	m_speed = 5;
-	printf("%d lives remaining.", m_lives);
+	m_speed = 5;	
+	m_textbox->Add("Lost a life! Lives remaining: " + std::to_string((long long)m_lives));
 	if (m_lives == 0) {
 		Lose();
 		return;
