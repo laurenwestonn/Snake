@@ -21,6 +21,30 @@ Direction Snake::GetDirection()
 	return m_dir;
 }
 
+Direction Snake::GetPhysicalDirection() {
+
+	if (m_snakeBody.size() < 2)
+		return Direction::None;
+
+	sf::Vector2i headPos = m_snakeBody.front().position;
+	sf::Vector2i neckPos = m_snakeBody[1].position;
+
+	if (headPos.x == neckPos.x) {
+		if (headPos.y > neckPos.y)
+			return Direction::Down;
+		else if (headPos.y < neckPos.y)
+			return Direction::Up;
+	}
+	else if (headPos.y == neckPos.y) {
+		if (headPos.x > neckPos.x)
+			return Direction::Right;
+		else if (headPos.x < neckPos.x)
+			return Direction::Left;
+	}
+	
+	return Direction::None;
+}
+
 int Snake::GetLives()
 {
 	return m_lives;

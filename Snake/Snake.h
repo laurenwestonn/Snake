@@ -24,6 +24,7 @@ public:
 
 	void SetDirection(Direction l_dir);
 	Direction GetDirection();
+	Direction GetPhysicalDirection();
 	int GetLives();
 	int GetSpeed();
 	int GetScore();
