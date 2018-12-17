@@ -56,8 +56,8 @@ void Textbox::Render(sf::RenderWindow & l_wind)
 	// Set string to be a 'Text' obj - (font, colour, size...)
 	if (totalContent != "") {
 		m_content.setString(totalContent);
-		l_wind.draw(m_content);
 		l_wind.draw(m_backdrop);
+		l_wind.draw(m_content);
 	}
 }
 
