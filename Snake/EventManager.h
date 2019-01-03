@@ -3,6 +3,9 @@
 #include <SFML\Graphics.hpp>
 #include <unordered_map>
 #include <functional>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 class EventManager {
 
@@ -63,10 +66,10 @@ class EventManager {
 
 		Events m_events;
 		std::string m_name;
-		int cnt;
+		int c;
 		EventDetails m_details;
 
-		Binding(const std::string &l_name) : m_name(l_name), m_details(l_name), cnt(0) {}
+		Binding(const std::string &l_name) : m_name(l_name), m_details(l_name), c(0) {}
 
 		void BindEvent(EventType l_type, EventInfo l_info = EventInfo())
 		{
