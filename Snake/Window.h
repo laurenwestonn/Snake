@@ -31,5 +31,5 @@ private:
 	bool m_isFullscreen;
 	bool m_isFocused;
 
-	EventManager* m_eventManager;
+	EventManager m_eventManager;
 };
