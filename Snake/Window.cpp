@@ -58,7 +58,7 @@ sf::Vector2u Window::GetWindowSize()
 	return m_windowSize;
 }
 
-void Window::ToggleFullscreen()
+void Window::ToggleFullscreen(EventDetails *e)
 {
 	m_isFullscreen = !m_isFullscreen;
 
@@ -66,7 +66,7 @@ void Window::ToggleFullscreen()
 	Create();
 }
 
-void Window::Close()
+void Window::Close(EventDetails *e)
 {
 	m_isDone = true;
 }
@@ -101,6 +101,7 @@ void Window::Setup(const std::string & l_title, const sf::Vector2u & l_size)
 	m_isFocused = true;
 
 	m_eventManager->AddCallback("Fullscreen_toggle", &Window::ToggleFullscreen, this);
+	m_eventManager->AddCallback("Window_close",&Window::Close, this);
 
 	Create();
 }

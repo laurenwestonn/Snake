@@ -36,6 +36,9 @@
     <ClInclude Include="Window.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="keys.cfg" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{26051254-09E0-4116-8320-FCE4166F9428}</ProjectGuid>
