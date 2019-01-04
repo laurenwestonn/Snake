@@ -6,7 +6,10 @@ Game::Game() : m_window("Snake", sf::Vector2u(800, 600)), m_snake(20, &m_textbox
 		printf("Couldn't load santa.jpg");
 
 	m_santa.setTexture(m_texture);
-	m_santa.setOrigin(m_texture.getSize.x / 2, m_texture.getSize.y / 2);
+	m_santa.setOrigin(m_texture.getSize().x / 2, m_texture.getSize().y / 2);
+
+
+	m_window.GetEventManager()->AddCallback("Move_sprite", &Game::MoveSprite, this);
 }
 
 
@@ -47,6 +50,7 @@ void Game::Render()
 	m_snake.Render(*m_window.GetRenderWindow());
 	m_world.Render(*m_window.GetRenderWindow(), m_snake.GetLives());
 	m_textbox.Render(*m_window.GetRenderWindow());
+	m_window.Draw(m_santa);
 	m_window.EndDraw();
 }
 
@@ -65,6 +69,7 @@ void Game::MoveSprite(EventDetails* l_details)
 	sf::Vector2i mousePos = m_window.GetEventManager()->GetMousePos(m_window.GetRenderWindow());
 	m_santa.setPosition(mousePos.x, mousePos.y);
 	
+	std::cout << "Move sprite to " << mousePos.x << ", " << mousePos.y << std::endl;
 }
 
 Window* Game::GetWindow()
