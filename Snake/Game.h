@@ -17,6 +17,7 @@ public:
 
 	void RestartClock();
 	sf::Time GetElapsed();
+	void MoveSprite(EventDetails* l_details);
 
 	Window* GetWindow();
 
@@ -29,5 +30,8 @@ private:
 	World m_world;
 	Snake m_snake;
 	Textbox m_textbox;
+
+	sf::Texture m_texture;
+	sf::Sprite m_santa;
 };
 

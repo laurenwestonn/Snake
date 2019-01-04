@@ -2,6 +2,11 @@
 
 Game::Game() : m_window("Snake", sf::Vector2u(800, 600)), m_snake(20, &m_textbox), m_world(sf::Vector2u(800,600), 20)
 {
+	if (!m_texture.loadFromFile("santa.jpg"))
+		printf("Couldn't load santa.jpg");
+
+	m_santa.setTexture(m_texture);
+	m_santa.setOrigin(m_texture.getSize.x / 2, m_texture.getSize.y / 2);
 }
 
 
@@ -53,6 +58,13 @@ void Game::RestartClock()
 sf::Time Game::GetElapsed()
 {
 	return m_elapsed;
+}
+
+void Game::MoveSprite(EventDetails* l_details)
+{
+	sf::Vector2i mousePos = m_window.GetEventManager()->GetMousePos(m_window.GetRenderWindow());
+	m_santa.setPosition(mousePos.x, mousePos.y);
+	
 }
 
 Window* Game::GetWindow()
