@@ -44,8 +44,8 @@ void EventManager::HandleEvent(sf::Event & l_event)
 	for (auto &b_itr : m_bindings) {
 		Binding* bind = b_itr.second;
 		for (auto &e_itr : bind->m_events) {
-			EventType sfmlEvent = (EventType)l_event.type;
-			if (e_itr.first != sfmlEvent) { continue; }
+			EventType sfmlEvent = (EventType)l_event.type;	// Compare the event that came in
+			if (e_itr.first != sfmlEvent) { continue; }		// to each event we have bound
 
 			// Keyboard button pressed
 			if (sfmlEvent == EventType::KeyDown || sfmlEvent == EventType::KeyUp) {
@@ -123,10 +123,12 @@ void EventManager::Update() {
 				break;
 			}
 		}
+
+		// If all triggers have happened to set off the event, call the method for the event
 		if (bind->m_events.size() == bind->c) {
 			auto callItr = m_callbacks.find(bind->m_name);
 			if (callItr != m_callbacks.end()) {
-				callItr->second(&bind->m_details);
+				callItr->second(&bind->m_details); // Call the callback method, passing in the EventDetails
 			}
 		}
 		bind->c = 0;
@@ -146,11 +148,11 @@ void EventManager::LoadBindings() {
 	while (std::getline(bindings, line)) {
 		std::stringstream keystream(line);
 		std::string callbackName;
-		keystream >> callbackName;
-		Binding* bind = new Binding(callbackName);
-		while (!keystream.eof()) {
-			std::string keyval;
-			keystream >> keyval;
+		keystream >> callbackName;	// First callbackName is Window_close rn
+		Binding* bind = new Binding(callbackName); //Create a new binding, only hold the name in m_name right now
+		while (!keystream.eof()) {	// Checking the stuff this Window_close is set up as
+			std::string keyval;	
+			keystream >> keyval;	// First value is 0:0 rn
 			int start = 0;
 			int end = keyval.find(delimiter);
 			if (end == std::string::npos) {
@@ -159,12 +161,12 @@ void EventManager::LoadBindings() {
 				break;
 			}
 			EventType type = EventType(
-				stoi(keyval.substr(start, end - start)));
+				stoi(keyval.substr(start, end - start))); // Event type is the no. before the :
 			int code = stoi(keyval.substr(end + delimiter.length(),
-				keyval.find(delimiter, end + delimiter.length())));
+				keyval.find(delimiter, end + delimiter.length()))); // `code` is the no. after the :
 			EventInfo eventInfo;
-			eventInfo.m_code = code;
-			bind->BindEvent(type, eventInfo);
+			eventInfo.m_code = code;	// Put the code into the event info
+			bind->BindEvent(type, eventInfo); //event type and a eventinfo, containing the code
 		}
 		if (!AddBinding(bind)) { delete bind; }
 		bind = nullptr;

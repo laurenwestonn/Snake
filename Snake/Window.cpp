@@ -38,7 +38,7 @@ void Window::Update()
 			m_isFocused = true;
 			m_eventManager.SetFocus(true);
 		}
-		m_eventManager.HandleEvent(evt);
+		m_eventManager.HandleEvent(evt); // register what relevant key was pressed last
 	}
 	m_eventManager.Update();
 }
