@@ -1,19 +1,16 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 #include "Window.h"
 #include "Snake.h"
 #include "World.h"
 #include "Textbox.h"
-#include <SFML/Graphics.hpp>
 
-enum class State {
-	Intro = 1,
-	MainMenu,
-	Game,
-	Pause,
-	Gameover,
-	Credits
+struct SharedContext
+{
+	SharedContext() : m_wind(nullptr), m_eventManager(nullptr) {}
+	Window *m_wind;
+	EventManager *m_eventManager;
 };
-
 
 class Game
 {

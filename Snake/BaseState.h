@@ -5,7 +5,7 @@ class StateManager;
 class BaseState
 {
 public:
-	BaseState(StateManager* l_sm) : m_stateManager(l_sm), m_transparent(false), m_transcendent(false);
+	BaseState(StateManager* l_sm) : m_stateManager(l_sm), m_transparent(false), m_transcendent(false) {};
 	virtual ~BaseState(); // Virtual means inherited classes must implement
 
 	virtual void OnCreate() = 0;
