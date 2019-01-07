@@ -5,6 +5,16 @@
 #include "Textbox.h"
 #include <SFML/Graphics.hpp>
 
+enum class State {
+	Intro = 1,
+	MainMenu,
+	Game,
+	Pause,
+	Gameover,
+	Credits
+};
+
+
 class Game
 {
 public:
