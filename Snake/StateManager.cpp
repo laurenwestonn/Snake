@@ -84,7 +84,56 @@ bool StateManager::HasState(const StateType & l_type)
 	return false;	// l_type isn't an existing state if there aren't any!
 }
 
+void StateManager::SwitchTo(const StateType & l_type)
+{
+	m_shared->m_eventManager->SetCurrentState(l_type);
+
+	for (auto itr = m_states.begin(); itr != m_states.end(); itr++) {
+		if (itr->first == l_type) {// Found the requested state. Deactivate it, bring new state to top (back) & activate
+			m_states.back->second->Deactivate();	// Turn off current state
+			StateType newType = itr->first;			// Temporarily remember the type of the new state
+			BaseState* newStatePtr = itr->second;	// Temporarily remember the new state
+			m_states.erase(itr);					// Get rid of this state now so that you can...
+			m_states.emplace_back(newType, newStatePtr); // ...make new state as most recently added.
+			newStatePtr->Activate();				// Go go go
+			return;
+		}
+
+	}
+
+	// State of type l_type wasn't found. Make one
+	if (!m_states.empty()) {
+		m_states.back().second->Deactivate();
+		CreateState(l_type);
+		m_states.back().second->Activate();	// Activate the new state you just added
+	}
+}
+
 void StateManager::Remove(const StateType & l_type)
 {
 	m_toRemove.push_back(l_type);
+}
+
+void StateManager::CreateState(const StateType & l_type)
+{
+	auto newState = m_stateFactory.find(l_type);
+	
+	if (newState == m_stateFactory.end) return;	// l_type couldn't be found
+
+	BaseState* state = newState->second(); // Found the state for type l_type in factory
+
+	m_states.emplace_back(l_type, state); // Add this new state from the factory to m_states
+	state->OnCreate();	// Initialise it
+
+}
+
+void StateManager::RemoveState(const StateType & l_type)
+{
+	for (auto itr = m_states.begin; itr != m_states.end; itr++)
+		if (itr->first == l_type) {
+			itr->second->OnDestroy;	// Destroy method for the actual state to remove
+			delete itr->second;		// Remove actual state from memory
+			m_states.erase(itr);	// Remove whole StateContainer (type and state)
+			return;
+		}
 }
