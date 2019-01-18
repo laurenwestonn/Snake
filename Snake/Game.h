@@ -4,13 +4,7 @@
 #include "Snake.h"
 #include "World.h"
 #include "Textbox.h"
-
-struct SharedContext
-{
-	SharedContext() : m_wind(nullptr), m_eventManager(nullptr) {}
-	Window *m_wind;
-	EventManager *m_eventManager;
-};
+#include "StateManager.h"
 
 class Game
 {
@@ -25,11 +19,14 @@ public:
 	void RestartClock();
 	sf::Time GetElapsed();
 	void MoveSprite(EventDetails* l_details);
+	void LateUpdate();
 
 	Window* GetWindow();
 
 private:
 	Window m_window;
+	StateManager m_stateManager;
+	SharedContext m_context;
 
 	sf::Clock clock;
 	sf::Time m_elapsed;

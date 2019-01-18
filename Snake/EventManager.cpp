@@ -148,11 +148,6 @@ void EventManager::Update() {
 					callItr->second(&bind->m_details);
 				}
 			}
-
-			auto callItr = m_callbacks.find(bind->m_name);
-			if (callItr != m_callbacks.end()) {
-				callItr->second(&bind->m_details); // Call the callback method, passing in the EventDetails
-			}
 		}
 		bind->c = 0;
 		bind->m_details.Clear();

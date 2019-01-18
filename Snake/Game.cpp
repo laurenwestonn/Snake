@@ -1,7 +1,15 @@
 #include "Game.h"
 
-Game::Game() : m_window("Snake", sf::Vector2u(800, 600)), m_snake(20, &m_textbox), m_world(sf::Vector2u(800,600), 20)
+Game::Game() : 
+	m_window("Snake", sf::Vector2u(800, 600)), 
+	m_snake(20, &m_textbox), 
+	m_world(sf::Vector2u(800,600), 20),
+	m_stateManager(&m_context)
 {
+	m_context.m_wind = &m_window;
+	m_context.m_eventManager = m_window.GetEventManager();
+	m_stateManager.SwitchTo(StateType::Intro);
+
 	if (!m_texture.loadFromFile("santa.jpg"))
 		printf("Couldn't load santa.jpg");
 
@@ -9,7 +17,7 @@ Game::Game() : m_window("Snake", sf::Vector2u(800, 600)), m_snake(20, &m_textbox
 	m_santa.setOrigin(m_texture.getSize().x / 2, m_texture.getSize().y / 2);
 
 
-	m_window.GetEventManager()->AddCallback("Move_sprite", &Game::MoveSprite, this);
+	m_window.GetEventManager()->AddCallback(StateType::Game, "Move_sprite", &Game::MoveSprite, this);
 }
 
 
@@ -42,6 +50,7 @@ void Game::Update()
 		}
 	}
 	m_window.Update();
+	m_stateManager.Update(m_elapsed);
 }
 
 void Game::Render()
@@ -51,6 +60,7 @@ void Game::Render()
 	m_world.Render(*m_window.GetRenderWindow(), m_snake.GetLives());
 	m_textbox.Render(*m_window.GetRenderWindow());
 	m_window.Draw(m_santa);
+	m_stateManager.Draw();
 	m_window.EndDraw();
 }
 
@@ -70,6 +80,12 @@ void Game::MoveSprite(EventDetails* l_details)
 	m_santa.setPosition(mousePos.x, mousePos.y);
 	
 	std::cout << "Move sprite to " << mousePos.x << ", " << mousePos.y << std::endl;
+}
+
+void Game::LateUpdate()
+{
+	m_stateManager.ProcessRequests();
+	RestartClock();
 }
 
 Window* Game::GetWindow()

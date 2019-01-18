@@ -16,6 +16,13 @@ using StateContainer = std::vector<std::pair<StateType, BaseState*>>;
 using TypeContainer = std::vector<StateType>;
 using StateFactory = std::unordered_map<StateType, std::function<BaseState* (void)>>;
 
+struct SharedContext
+{
+	SharedContext() : m_wind(nullptr), m_eventManager(nullptr) {}
+	Window *m_wind;
+	EventManager *m_eventManager;
+};
+
 class StateManager
 {
 public:
