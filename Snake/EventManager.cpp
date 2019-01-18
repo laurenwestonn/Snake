@@ -126,6 +126,29 @@ void EventManager::Update() {
 
 		// If all triggers have happened to set off the event, call the method for the event
 		if (bind->m_events.size() == bind->c) {
+			// All callbacks for the current state
+			auto stateCallbacks = m_callbacks.find(m_currentState);
+			// StateType starts at 1, so (0) is invalid. These callbacks will be global ones, used everywhere, like window
+			auto otherCallbacks = m_callbacks.find(StateType(0));
+
+			if (stateCallbacks != m_callbacks.end()) {
+				// Found the current state
+				auto callItr = stateCallbacks->second.find(bind->m_name);
+				if (callItr != stateCallbacks->second.end()) {
+					// Found the name. Pass in event info
+					callItr->second(&bind->m_details);
+				}
+			}
+
+			if (otherCallbacks != m_callbacks.end()) {
+				// Found the first state type
+				auto callItr = otherCallbacks->second.find(bind->m_name);
+				if (callItr != otherCallbacks->second.end()) {
+					// Found the name. Pass in event info
+					callItr->second(&bind->m_details);
+				}
+			}
+
 			auto callItr = m_callbacks.find(bind->m_name);
 			if (callItr != m_callbacks.end()) {
 				callItr->second(&bind->m_details); // Call the callback method, passing in the EventDetails
