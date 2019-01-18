@@ -1,7 +1,9 @@
 #pragma once
-#include "Game.h"
 #include "BaseState.h"
-
+#include <unordered_map>
+#include <functional>
+#include "Window.h"
+#include "EventManager.h"
 
 enum class StateType {
 	Intro = 1,

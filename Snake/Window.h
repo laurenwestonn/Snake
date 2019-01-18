@@ -1,6 +1,10 @@
+#pragma once
 #include <string>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include "EventManager.h"
+
 
 class Window {
 public:

@@ -1,5 +1,4 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include "Window.h"
 #include "Snake.h"
 #include "World.h"

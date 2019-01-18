@@ -1,11 +1,12 @@
 #pragma once
-#include <string>
-#include <SFML\Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+#include <vector>
 #include <unordered_map>
 #include <functional>
 #include <fstream>
-#include <iostream>
 #include <sstream>
+#include <iostream>
 
 enum class EventType {
 	KeyDown = sf::Event::KeyPressed,

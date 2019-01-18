@@ -14,7 +14,7 @@ Game::Game() :
 		printf("Couldn't load santa.jpg");
 
 	m_santa.setTexture(m_texture);
-	m_santa.setOrigin(m_texture.getSize().x / 2, m_texture.getSize().y / 2);
+	m_santa.setOrigin((float) m_texture.getSize().x / 2, (float) m_texture.getSize().y / 2);
 
 
 	m_window.GetEventManager()->AddCallback(StateType::Game, "Move_sprite", &Game::MoveSprite, this);
@@ -77,7 +77,7 @@ sf::Time Game::GetElapsed()
 void Game::MoveSprite(EventDetails* l_details)
 {
 	sf::Vector2i mousePos = m_window.GetEventManager()->GetMousePos(m_window.GetRenderWindow());
-	m_santa.setPosition(mousePos.x, mousePos.y);
+	m_santa.setPosition((float) mousePos.x, (float) mousePos.y);
 	
 	std::cout << "Move sprite to " << mousePos.x << ", " << mousePos.y << std::endl;
 }
