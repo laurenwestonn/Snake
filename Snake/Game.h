@@ -1,8 +1,8 @@
 #pragma once
 #include "Window.h"
-#include "Snake.h"
-#include "World.h"
-#include "Textbox.h"
+//#include "Snake.h"
+//#include "World.h"
+//#include "Textbox.h"
 #include "StateManager.h"
 
 class Game
@@ -30,9 +30,9 @@ private:
 	sf::Clock clock;
 	sf::Time m_elapsed;
 
-	World m_world;
-	Snake m_snake;
-	Textbox m_textbox;
+	//World m_world;
+	//Snake m_snake;
+	//Textbox m_textbox;
 
 	sf::Texture m_texture;
 	sf::Sprite m_santa;

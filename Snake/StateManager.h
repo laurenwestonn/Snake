@@ -4,6 +4,8 @@
 #include <functional>
 #include "Window.h"
 #include "EventManager.h"
+#include "State_Intro.h"
+#include "State_MainMenu.h"
 
 enum class StateType {
 	Intro = 1,

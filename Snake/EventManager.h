@@ -89,6 +89,7 @@ public:
 
 	bool AddBinding(Binding *l_binding);
 	bool RemoveBinding(std::string l_name);
+	void SetCurrentState(StateType l_state);
 	void SetFocus(const bool &l_focus);
 
 	void HandleEvent(sf::Event &l_event);

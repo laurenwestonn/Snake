@@ -1,6 +1,8 @@
 #include "EventManager.h"
 
-EventManager::EventManager() : m_hasFocus(true)
+EventManager::EventManager() : 
+	m_currentState(StateType(0)), 
+	m_hasFocus(true)
 {
 	LoadBindings();
 }
@@ -16,7 +18,7 @@ EventManager::~EventManager()
 
 bool EventManager::AddBinding(Binding * l_binding)
 {
-	if (m_bindings.find(l_binding->m_name) != m_bindings.end())
+	if (!l_binding || m_bindings.find(l_binding->m_name) != m_bindings.end())
 		return false;
 
 	return m_bindings.emplace(l_binding->m_name, l_binding).second;
@@ -32,6 +34,11 @@ bool EventManager::RemoveBinding(std::string l_name)
 	m_bindings.erase(itr);
 	return true;
 }
+
+void EventManager::SetCurrentState(StateType l_state) {
+	m_currentState = l_state;
+}
+
 
 void EventManager::SetFocus(const bool & l_focus)
 {
@@ -156,12 +163,16 @@ void EventManager::Update() {
 
 void EventManager::LoadBindings() {
 	std::string delimiter = ":";
+
+	// Find the keys config file
 	std::ifstream bindings;
 	bindings.open("keys.cfg");
 	if (!bindings.is_open()) {
 		std::cout << "! Failed loading keys.cfg." << std::endl;
 		return;
 	}
+
+	// Read line by line
 	std::string line;
 	while (std::getline(bindings, line)) {
 		std::stringstream keystream(line);
@@ -174,9 +185,7 @@ void EventManager::LoadBindings() {
 			int start = 0;
 			int end = keyval.find(delimiter);
 			if (end == std::string::npos) {
-				delete bind;
-				bind = nullptr;
-				break;
+				break;	// No more actions for this callback. Add what we have
 			}
 			EventType type = EventType(
 				stoi(keyval.substr(start, end - start))); // Event type is the no. before the :

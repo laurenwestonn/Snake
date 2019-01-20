@@ -4,8 +4,8 @@
 
 StateManager::StateManager(SharedContext *l_shared) : m_shared(l_shared)
 {
-	//RegisterState<State_Intro>(StateType::Intro);
-	//RegisterState<State_MainMenu>(StateType::MainMenu);
+	RegisterState<State_Intro>(StateType::Intro);
+	RegisterState<State_MainMenu>(StateType::MainMenu);
 	//RegisterState<State_Game>(StateType::Game);
 	//RegisterState<State_Pause>(StateType::Pause);
 }
@@ -25,7 +25,7 @@ void StateManager::Update(const sf::Time & l_time)
 		return;
 
 	auto itr = m_states.end(); // .end is an iterator PAST the end. .back is the value of the true last element
-								// .begin is an iterator pointing to the first element. front is value of first elem
+	itr--;							// .begin is an iterator pointing to the first element. front is value of first elem
 	while (itr != m_states.begin() && itr->second->IsTranscendent())
 		itr--;
 
@@ -42,6 +42,7 @@ void StateManager::Draw()
 	
 	// Find the most recently placed opaque state
 	auto itr = m_states.end();
+	itr--; // get to the last element, not one past the end
 	while (itr != m_states.begin() && itr->second->IsTransparent()) {
 		itr--; // Can't see this, check the one placed before
 	}
@@ -86,7 +87,7 @@ bool StateManager::HasState(const StateType & l_type)
 
 void StateManager::SwitchTo(const StateType & l_type)
 {
-	// TODO: m_shared->m_eventManager->SetCurrentState(l_type);
+	m_shared->m_eventManager->SetCurrentState(l_type);
 
 	for (auto itr = m_states.begin(); itr != m_states.end(); itr++) {
 		if (itr->first == l_type) {// Found the requested state. Deactivate it, bring new state to top (back) & activate
@@ -102,11 +103,11 @@ void StateManager::SwitchTo(const StateType & l_type)
 	}
 
 	// State of type l_type wasn't found. Make one
-	if (!m_states.empty()) {
+	if (!m_states.empty())
 		m_states.back().second->Deactivate();
-		CreateState(l_type);
-		m_states.back().second->Activate();	// Activate the new state you just added
-	}
+	CreateState(l_type);
+	m_states.back().second->Activate();	// Activate the new state you just added
+
 }
 
 void StateManager::Remove(const StateType & l_type)
