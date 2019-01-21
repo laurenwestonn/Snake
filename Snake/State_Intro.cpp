@@ -39,8 +39,8 @@ void State_Intro::OnDestroy()
 
 void State_Intro::Update(const sf::Time& l_time)
 {
-	if (m_timePassed < 5.0f) {	// Been less than 5 seconds
-		printf("It's still less than 5 secs. It's been %f seconds. Sprite at %f, %f. Increase y by %f\n", 
+	if (m_timePassed < 3.0f) {	// Been less than 3 seconds
+		printf("It's still less than 3 secs. It's been %f seconds. Sprite at %f, %f. Increase y by %f\n", 
 			m_timePassed,
 			m_introSprite.getPosition().x, m_introSprite.getPosition().y,
 			(4 * l_time.asSeconds()));
@@ -48,15 +48,15 @@ void State_Intro::Update(const sf::Time& l_time)
 		m_timePassed += l_time.asSeconds(); // Keep updating the time
 		m_introSprite.setPosition(
 			m_introSprite.getPosition().x, 
-			m_introSprite.getPosition().y + (48 * l_time.asSeconds())); // Move down 48 per sec
+			m_introSprite.getPosition().y + (100 * l_time.asSeconds())); // Move down 48 per sec
 	} else
- 		printf("Been over 5 secs. Stop the sprite from moving. It's now at %f, %f\n", m_introSprite.getPosition().x, m_introSprite.getPosition().y);
+ 		printf("Been over 3 secs. Stop the sprite from moving. It's now at %f, %f\n", m_introSprite.getPosition().x, m_introSprite.getPosition().y);
 }
 
 void State_Intro::Draw()
 {
 	m_stateManager->GetSharedContext()->m_wind->Draw(m_introSprite);
-	if (m_timePassed > 5.0f)
+	if (m_timePassed > 3.0f)
 		m_stateManager->GetSharedContext()->m_wind->Draw(m_introText);
 }
 
@@ -65,7 +65,7 @@ void State_Intro::Deactivate() { }
 
 void State_Intro::Continue(EventDetails * l_details)
 {
-	if (m_timePassed >= 5.0f) {
+	if (m_timePassed >= 3.0f) {
 		m_stateManager->SwitchTo(StateType::MainMenu);
 		m_stateManager->Remove(StateType::Intro);
 	}
