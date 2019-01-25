@@ -17,4 +17,20 @@ public:
 	void Update(const sf::Time& l_time);
 	void Draw();
 
+	void MouseClick(EventDetails* l_details);
+
+
+private:
+	sf::Text m_title;
+	sf::Vector2f m_size;
+	sf::Vector2f m_position;
+	unsigned int m_padding;
+
+	sf::Vector2f m_buttonSize;
+	sf::Vector2f m_buttonPosition;
+	unsigned int m_buttonPadding;
+
+	sf::RectangleShape m_rects[3];
+	sf::Text m_labels[3];
+
 };
