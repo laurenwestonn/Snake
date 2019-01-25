@@ -53,7 +53,7 @@ struct EventDetails {
 		m_size = sf::Vector2i(0, 0);
 		m_textEntered = 0;
 		m_mouse = sf::Vector2i(0, 0);
-		int m_mouseWheelDela = 0;
+		int m_mouseWheelDelta = 0;
 		m_keyCode = -1;
 	}
 };

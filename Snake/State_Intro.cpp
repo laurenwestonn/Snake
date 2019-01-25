@@ -2,61 +2,58 @@
 #include "StateManager.h"
 
 
-State_Intro::State_Intro(StateManager* l_stateManager)
-	: BaseState(l_stateManager) {}
+State_Intro::State_Intro(StateManager* l_state_manager)
+	: BaseState(l_state_manager)
+{
+	m_timePassed = 0;
+}
 
 void State_Intro::OnCreate()
 {
 	printf("Creating intro state\n");
-	m_timePassed = 0;
 
-	sf::Vector2u windowSize = m_stateManager->GetSharedContext()->m_wind->GetWindowSize();
+	const auto window_size = m_stateManager->GetSharedContext()->m_wind->GetWindowSize();
 
 	m_introTexture.loadFromFile("intro.png");
 	m_introSprite.setTexture(m_introTexture);
 	m_introSprite.setOrigin(m_introTexture.getSize().x / 2.0f, m_introTexture.getSize().y / 2.0f);
-	m_introSprite.setPosition((windowSize.x / 2.0f), 0.0f);	// Start at the top, in the middle
+	m_introSprite.setPosition((window_size.x / 2.0f), 0.0f);	// Start at the top, in the middle
 
 	m_introFont.loadFromFile("ALIEN5.ttf");
 	m_introText.setFont(m_introFont);
 	m_introText.setString({ "Press SPACE to continue" });
 	m_introText.setCharacterSize(10);
 
-	sf::FloatRect textRec = m_introText.getLocalBounds();
-	m_introText.setOrigin(sf::Vector2f(textRec.left + textRec.width / 2, textRec.top + textRec.height / 2));
-	m_introText.setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y / 3 * 2));
+	const sf::FloatRect text_rec = m_introText.getLocalBounds();
+	m_introText.setOrigin(sf::Vector2f(text_rec.left + text_rec.width / 2, text_rec.top + text_rec.height / 2));
+	m_introText.setPosition(sf::Vector2f(float(window_size.x) / 2, float(window_size.y) / 3 * 2));
 
-	EventManager *eventManager = m_stateManager->GetSharedContext()->m_eventManager;
-	eventManager->AddCallback(StateType::Intro, "Intro_continue", &State_Intro::Continue,this);
+	EventManager *event_manager = m_stateManager->GetSharedContext()->m_eventManager;
+	event_manager->AddCallback(StateType::Intro, "Intro_Continue", &State_Intro::Continue,this);
 }
 
 void State_Intro::OnDestroy()
 {
 	m_stateManager->GetSharedContext()->m_eventManager->
-		RemoveCallback(StateType::Intro, "Intro_continue");
+		RemoveCallback(StateType::Intro, "Intro_Continue");
 
 }
 
 void State_Intro::Update(const sf::Time& l_time)
 {
 	if (m_timePassed < 3.0f) {	// Been less than 3 seconds
-		printf("It's still less than 3 secs. It's been %f seconds. Sprite at %f, %f. Increase y by %f\n", 
-			m_timePassed,
-			m_introSprite.getPosition().x, m_introSprite.getPosition().y,
-			(4 * l_time.asSeconds()));
-		
-		m_timePassed += l_time.asSeconds(); // Keep updating the time
 		m_introSprite.setPosition(
 			m_introSprite.getPosition().x, 
 			m_introSprite.getPosition().y + (100 * l_time.asSeconds())); // Move down 48 per sec
-	} else
- 		printf("Been over 3 secs. Stop the sprite from moving. It's now at %f, %f\n", m_introSprite.getPosition().x, m_introSprite.getPosition().y);
+	}
+
+	m_timePassed += l_time.asSeconds(); // Keep updating the time
 }
 
 void State_Intro::Draw()
 {
 	m_stateManager->GetSharedContext()->m_wind->Draw(m_introSprite);
-	if (m_timePassed > 3.0f)
+	if (m_timePassed >= 3.0f)
 		m_stateManager->GetSharedContext()->m_wind->Draw(m_introText);
 }
 
