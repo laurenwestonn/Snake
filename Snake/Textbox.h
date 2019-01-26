@@ -22,7 +22,7 @@ public:
 
 private:
 	MessageContainer m_messages;
-	int m_numVisible;
+	unsigned int m_numVisible;
 
 	sf::RectangleShape m_backdrop;
 	sf::Font m_font;

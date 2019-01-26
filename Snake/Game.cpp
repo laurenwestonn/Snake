@@ -5,7 +5,7 @@ Game::Game() :
 	m_stateManager(&m_context)
 {
 	m_clock.restart();
-	srand(time(nullptr));
+	srand(unsigned int (time(nullptr)));
 
 	m_context.m_wind = &m_window;
 	m_context.m_eventManager = m_window.GetEventManager();

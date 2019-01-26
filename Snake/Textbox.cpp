@@ -26,7 +26,7 @@ void Textbox::Setup(int l_visible, int l_charSize, int l_width, sf::Vector2f l_s
 	m_content.setFillColor(sf::Color::White);
 	m_content.setPosition(l_screenPos + l_padding);
 
-	m_backdrop.setSize(sf::Vector2f(l_width, l_visible * l_charSize * 1.2f));
+	m_backdrop.setSize(sf::Vector2f(float(l_width), float(l_visible * l_charSize * 1.2f)));
 	m_backdrop.setFillColor(sf::Color(90,90,90,90));
 	m_backdrop.setPosition(l_screenPos);
 }

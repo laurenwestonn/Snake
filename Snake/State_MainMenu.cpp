@@ -1,5 +1,6 @@
 #include "State_MainMenu.h"
 #include "StateManager.h"
+#include "SharedContext.h"
 
 State_MainMenu::State_MainMenu(StateManager* l_stateManager)
 	: BaseState(l_stateManager) {}
@@ -14,8 +15,8 @@ void State_MainMenu::OnCreate()
 	auto windowSize = sharedContext->m_wind->GetWindowSize();
 
 	// Graphical elements
-	m_size = sf::Vector2f(windowSize.x * 0.8, windowSize.y * 0.8);
-	m_padding = windowSize.x * 0.1;
+	m_size = sf::Vector2f(windowSize.x * 0.8f, windowSize.y * 0.8f);
+	m_padding = int(windowSize.x * 0.1f);
 	
 
 	// Text members. Font, words, size, colour, origin, position
@@ -27,11 +28,11 @@ void State_MainMenu::OnCreate()
 
 	sf::FloatRect textRect = m_title.getLocalBounds();
 	m_title.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-	m_title.setPosition(windowSize.x * 0.5, windowSize.y * 0.2);
+	m_title.setPosition(float(windowSize.x) * 0.5f, float(windowSize.y) * 0.2f);
 
 	// Button positions
 	m_buttonSize = sf::Vector2f(300.0f, 30.f);
-	m_buttonPosition = sf::Vector2f(windowSize.x * 0.5, windowSize.y * 0.5);
+	m_buttonPosition = sf::Vector2f(float(windowSize.x) * 0.5f, float(windowSize.y) * 0.5f);
 	m_buttonPadding = 4; // 4px
 
 	// Button labels

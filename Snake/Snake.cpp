@@ -4,7 +4,7 @@ Snake::Snake(int l_blockSize, Textbox *l_textbox)
 {
 	m_size = l_blockSize;
 	m_textbox = l_textbox;
-	m_bodyRect.setSize(sf::Vector2f(m_size - 1, m_size - 1));
+	m_bodyRect.setSize(sf::Vector2f(m_size - 1.0f, m_size - 1.0f));
 	Reset(); //starting position
 }
 
@@ -208,14 +208,14 @@ void Snake::Render(sf::RenderWindow & l_window)
 	auto head = m_snakeBody.begin();
 
 	m_bodyRect.setFillColor(sf::Color::Yellow);
-	m_bodyRect.setPosition(head->position.x * m_size, head->position.y * m_size);
+	m_bodyRect.setPosition(head->position.x * float(m_size), head->position.y * float(m_size));
 
 
 	l_window.draw(m_bodyRect);
 
 	m_bodyRect.setFillColor(sf::Color::Green);
 	for (auto itr = m_snakeBody.begin() + 1; itr != m_snakeBody.end(); ++itr) {
-		m_bodyRect.setPosition(itr->position.x * m_size, itr->position.y * m_size);
+		m_bodyRect.setPosition(itr->position.x * float(m_size), itr->position.y * float(m_size));
 		l_window.draw(m_bodyRect);
 	}
 }
