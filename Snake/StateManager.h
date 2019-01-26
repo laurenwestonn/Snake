@@ -6,6 +6,7 @@
 #include "EventManager.h"
 #include "State_Intro.h"
 #include "State_MainMenu.h"
+#include "State_Game.h"
 
 enum class StateType {
 	Intro = 1,

@@ -52,9 +52,9 @@ void State_Intro::Update(const sf::Time& l_time)
 
 void State_Intro::Draw()
 {
-	m_stateManager->GetSharedContext()->m_wind->Draw(m_introSprite);
+	m_stateManager->GetSharedContext()->m_wind->GetRenderWindow()->draw(m_introSprite);
 	if (m_timePassed >= 3.0f)
-		m_stateManager->GetSharedContext()->m_wind->Draw(m_introText);
+		m_stateManager->GetSharedContext()->m_wind->GetRenderWindow()->draw(m_introText);
 }
 
 void State_Intro::Activate() { }

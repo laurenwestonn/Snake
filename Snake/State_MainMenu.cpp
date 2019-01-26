@@ -20,13 +20,12 @@ void State_MainMenu::OnCreate()
 
 	// Text members. Font, words, size, colour, origin, position
 	sf::Font font;
-	font.loadFromFile("ALIEN5.tff");
+	font.loadFromFile("ALIEN5.ttf");
 	m_title.setFont(font);
-	m_title.setString({ "MAIN MENU" });
+	m_title.setString(sf::String("MAIN MENU"));
 	m_title.setCharacterSize(15);
-	m_title.setFillColor(sf::Color::White);
 
-	sf::FloatRect textRect = m_title.getGlobalBounds();
+	sf::FloatRect textRect = m_title.getLocalBounds();
 	m_title.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
 	m_title.setPosition(windowSize.x * 0.5, windowSize.y * 0.2);
 
@@ -69,10 +68,25 @@ void State_MainMenu::OnCreate()
 
 void State_MainMenu::OnDestroy()
 {
+	EventManager* eventMan = m_stateManager->GetSharedContext()->m_eventManager;
+	eventMan->RemoveCallback(StateType::MainMenu, "Mouse_Left");
 }
 
 void State_MainMenu::Activate()
 {
+	// If you've been to the game state already, the button should say resume
+	if (m_stateManager->HasState(StateType::Game)
+		&& m_labels[0].getString() == "PLAY")
+	{
+		printf("Updating the main menu button from PLAY to Resume");
+
+		m_labels[0].setString("Resume");
+		
+		sf::FloatRect bounds = m_labels[0].getLocalBounds();
+		m_labels[0].setOrigin(bounds.left + bounds.width / 2.0f,
+			bounds.top + bounds.height / 2.0f);
+	}
+
 }
 
 void State_MainMenu::Deactivate()
@@ -85,8 +99,58 @@ void State_MainMenu::Update(const sf::Time & l_time)
 
 void State_MainMenu::Draw()
 {
+	// Get the render window
+	Window* window = m_stateManager->GetSharedContext()->m_wind;
+
+	sf::Text testText;
+
+	
+	sf::Font font;
+	font.loadFromFile("ALIEN5.ttf");
+	testText.setFont(font);
+	testText.setString(sf::String("MAIN MENU"));
+	testText.setCharacterSize(15);
+	
+	sf::FloatRect textRect = testText.getLocalBounds();
+	testText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+	testText.setPosition(300, 300);
+
+
+	m_stateManager->GetSharedContext()->m_wind->GetRenderWindow()->draw(testText);
+
+
+	m_stateManager->GetSharedContext()->m_wind->GetRenderWindow()->draw(m_title);
+	
+	for (int i = 0; i < 3; ++i) {
+		m_stateManager->GetSharedContext()->m_wind->GetRenderWindow()->draw(m_rects[i]);
+		m_stateManager->GetSharedContext()->m_wind->GetRenderWindow()->draw(m_labels[i]);
+	}
 }
 
 void State_MainMenu::MouseClick(EventDetails * l_details)
 {
+	sf::Vector2i mousePos = l_details->m_mouse;
+
+	float halfX = m_buttonSize.x / 2.0f;
+	float halfY = m_buttonSize.y / 2.0f;
+
+	// Check each button
+	for (int i = 0; i < 3; i++)
+	{
+		// Check each bound
+		if (mousePos.x >= m_rects[i].getPosition().x - halfX &&
+			mousePos.x <= m_rects[i].getPosition().x + halfX &&
+			mousePos.y >= m_rects[i].getPosition().y - halfY &&
+			mousePos.y <= m_rects[i].getPosition().y + halfY)
+		{
+			printf("Button %d was clicked", i+1);
+			if (i == 0)
+				m_stateManager->SwitchTo(StateType::Game);
+			else if (i == 1)
+				;//credits
+			else if (i == 2)
+				m_stateManager->GetSharedContext()->m_wind->Close();
+;		}
+
+	}
 }

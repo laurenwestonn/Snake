@@ -22,6 +22,7 @@
     <ClCompile Include="BaseState.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="State_Game.cpp" />
     <ClCompile Include="State_Intro.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Snake.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="BaseState.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="State_Game.h" />
     <ClInclude Include="State_Intro.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Snake.h" />

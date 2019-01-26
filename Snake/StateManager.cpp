@@ -6,7 +6,7 @@ StateManager::StateManager(SharedContext *l_shared) : m_shared(l_shared)
 {
 	RegisterState<State_Intro>(StateType::Intro);
 	RegisterState<State_MainMenu>(StateType::MainMenu);
-	//RegisterState<State_Game>(StateType::Game);
+	RegisterState<State_Game>(StateType::Game);
 	//RegisterState<State_Pause>(StateType::Pause);
 }
 
@@ -89,7 +89,7 @@ void StateManager::SwitchTo(const StateType & l_type)
 {
 	m_shared->m_eventManager->SetCurrentState(l_type);
 
-	for (auto itr = m_states.begin(); itr != m_states.end(); itr++) {
+	for (auto itr = m_states.begin(); itr != m_states.end(); ++itr) {
 		if (itr->first == l_type) {// Found the requested state. Deactivate it, bring new state to top (back) & activate
 			m_states.back().second->Deactivate();	// Turn off current state
 			StateType newType = itr->first;			// Temporarily remember the type of the new state
