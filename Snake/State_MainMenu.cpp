@@ -11,6 +11,8 @@ State_MainMenu::~State_MainMenu()
 
 void State_MainMenu::OnCreate()
 {
+	printf("Creating main menu state\n");
+
 	auto sharedContext = m_stateManager->GetSharedContext();
 	auto windowSize = sharedContext->m_wind->GetWindowSize();
 
@@ -20,11 +22,10 @@ void State_MainMenu::OnCreate()
 	
 
 	// Text members. Font, words, size, colour, origin, position
-	sf::Font font;
-	font.loadFromFile("ALIEN5.ttf");
-	m_title.setFont(font);
+	m_font.loadFromFile("ALIEN5.ttf");
+	m_title.setFont(m_font);
 	m_title.setString(sf::String("MAIN MENU"));
-	m_title.setCharacterSize(15);
+	m_title.setCharacterSize(25);
 
 	sf::FloatRect textRect = m_title.getLocalBounds();
 	m_title.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
@@ -53,9 +54,9 @@ void State_MainMenu::OnCreate()
 		m_rects[i].setOrigin(m_buttonSize.x * 0.5f, m_buttonSize.y * 0.5f);
 		m_rects[i].setPosition(buttonPosition);
 
-		m_labels[i].setFont(font);
+		m_labels[i].setFont(m_font);
 		m_labels[i].setString(str[i]);
-		m_labels[i].setCharacterSize(12);
+		m_labels[i].setCharacterSize(20);
 		
 		sf::FloatRect rect = m_labels[i].getLocalBounds();
 		m_labels[i].setOrigin(rect.left + rect.width * 0.5f, rect.top + rect.height * 0.5f);
@@ -101,31 +102,14 @@ void State_MainMenu::Update(const sf::Time & l_time)
 void State_MainMenu::Draw()
 {
 	// Get the render window
-	Window* window = m_stateManager->GetSharedContext()->m_wind;
+	sf::RenderWindow* renderWindow = m_stateManager->GetSharedContext()->m_wind->GetRenderWindow();
 
-	sf::Text testText;
-
-	
-	sf::Font font;
-	font.loadFromFile("ALIEN5.ttf");
-	testText.setFont(font);
-	testText.setString(sf::String("MAIN MENU"));
-	testText.setCharacterSize(15);
-	
-	sf::FloatRect textRect = testText.getLocalBounds();
-	testText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-	testText.setPosition(300, 300);
-
-
-	m_stateManager->GetSharedContext()->m_wind->GetRenderWindow()->draw(testText);
-
-
-	m_stateManager->GetSharedContext()->m_wind->GetRenderWindow()->draw(m_title);
-	
 	for (int i = 0; i < 3; ++i) {
-		m_stateManager->GetSharedContext()->m_wind->GetRenderWindow()->draw(m_rects[i]);
-		m_stateManager->GetSharedContext()->m_wind->GetRenderWindow()->draw(m_labels[i]);
+		renderWindow->draw(m_rects[i]);
+		renderWindow->draw(m_labels[i]);
 	}
+
+	renderWindow->draw(m_title);
 }
 
 void State_MainMenu::MouseClick(EventDetails * l_details)

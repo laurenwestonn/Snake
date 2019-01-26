@@ -22,6 +22,7 @@ public:
 
 private:
 	sf::Text m_title;
+	sf::Font m_font;
 	sf::Vector2f m_size;
 	sf::Vector2f m_position;
 	unsigned int m_padding;
