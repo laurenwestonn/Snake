@@ -60,8 +60,7 @@ void State_MainMenu::OnCreate()
 		
 		sf::FloatRect rect = m_labels[i].getLocalBounds();
 		m_labels[i].setOrigin(rect.left + rect.width * 0.5f, rect.top + rect.height * 0.5f);
-
-		m_labels->setPosition(buttonPosition);
+		m_labels[i].setPosition(buttonPosition);
 	}
 
 	// Mouse click callback
@@ -80,7 +79,7 @@ void State_MainMenu::Activate()
 	if (m_stateManager->HasState(StateType::Game)
 		&& m_labels[0].getString() == "PLAY")
 	{
-		printf("Updating the main menu button from PLAY to Resume");
+		printf("Updating the main menu button from PLAY to Resume\n");
 
 		m_labels[0].setString("Resume");
 		
@@ -128,7 +127,7 @@ void State_MainMenu::MouseClick(EventDetails * l_details)
 			mousePos.y >= m_rects[i].getPosition().y - halfY &&
 			mousePos.y <= m_rects[i].getPosition().y + halfY)
 		{
-			printf("Button %d was clicked", i+1);
+			printf("Button %d was clicked\n", i+1);
 			if (i == 0)
 				m_stateManager->SwitchTo(StateType::Game);
 			else if (i == 1)
