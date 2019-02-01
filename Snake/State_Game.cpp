@@ -68,7 +68,7 @@ void State_Game::Draw()
 void State_Game::Pause(EventDetails* l_details)
 {
 	printf("Pause here!\n");
-	m_stateManager->SwitchTo(StateType::MainMenu);
+	m_stateManager->SwitchTo(StateType::Pause);
 }
 
 void State_Game::MainMenu(EventDetails* l_details)

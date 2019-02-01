@@ -28,6 +28,7 @@
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="State_MainMenu.cpp" />
+    <ClCompile Include="State_Pause.cpp" />
     <ClCompile Include="Textbox.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="World.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="Snake.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="State_MainMenu.h" />
+    <ClInclude Include="State_Pause.h" />
     <ClInclude Include="Textbox.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="World.h" />
