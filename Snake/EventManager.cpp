@@ -145,9 +145,9 @@ void EventManager::Update() {
 			// StateType starts at 1, so (0) is invalid. These callbacks will be global ones, used everywhere, like window
 			auto otherCallbacks = m_callbacks.find(StateType(0));
 
-			if (stateCallbacks != m_callbacks.end()) {
+			if (stateCallbacks != m_callbacks.end()) 
+			{
 				// Found the callbacks for the current state 
-
 				auto function = stateCallbacks->second.find(bind->m_name);
 				if (function != stateCallbacks->second.end()) {
 					// Found the name. Pass in event info
@@ -155,8 +155,9 @@ void EventManager::Update() {
 				}
 			}
 
-			if (otherCallbacks != m_callbacks.end()) {
-				// Found the first state type
+			if (otherCallbacks != m_callbacks.end()) 
+			{
+				// Found the generic callbacks
 				auto callItr = otherCallbacks->second.find(bind->m_name);
 				if (callItr != otherCallbacks->second.end()) {
 					// Found the name. Pass in event info
