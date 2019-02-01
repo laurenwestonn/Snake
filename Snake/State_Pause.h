@@ -11,14 +11,14 @@ public:
 	State_Pause(StateManager *l_stateManager);
 	~State_Pause();
 
-	void OnCreate();
-	void OnDestroy();
+	virtual void OnCreate() override;
+	virtual void OnDestroy() override;
 
-	void Activate();
-	void Deactivate();
+	virtual void Activate() override;
+	virtual void Deactivate() override;
 
-	void Update(const sf::Time& l_time);
-	void Draw();
+	virtual void Update(const sf::Time& l_time) override;
+	virtual void Draw() override;
 
 	void UnPause(EventDetails* l_details);
 

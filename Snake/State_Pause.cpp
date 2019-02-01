@@ -10,7 +10,7 @@ void State_Pause::OnCreate()
 
 	SetTransparent(true);	// MAKE THIS PAUSED STATE TRANSPARENT
 
-	sf::Vector2u winSize = m_stateManager->GetSharedContext()->m_wind->GetWindowSize();
+	const auto winSize = m_stateManager->GetSharedContext()->m_wind->GetWindowSize();
 
 	if (m_font.loadFromFile("ALIEN5.ttf"))
 	{
@@ -56,6 +56,6 @@ void State_Pause::Draw()
 
 void State_Pause::UnPause(EventDetails* l_details)
 {
-	printf("Unpause!");
+	printf("Un-pause!");
 	m_stateManager->SwitchTo(StateType::Game);
 }

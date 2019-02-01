@@ -1,7 +1,5 @@
 #pragma once
 #include "Window.h"
-//#include "Snake.h"
-//#include "World.h"
 //#include "Textbox.h"
 #include "StateManager.h"
 

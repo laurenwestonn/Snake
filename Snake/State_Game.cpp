@@ -43,11 +43,11 @@ void State_Game::Deactivate()
 
 void State_Game::Update(const sf::Time & l_time)
 {
-	sf::Vector2f currPos = m_sprite.getPosition();
-	sf::Vector2u windowSize = m_stateManager->GetSharedContext()->m_wind->GetWindowSize();
+	const sf::Vector2f currPos = m_sprite.getPosition();
+	const sf::Vector2u windowSize = m_stateManager->GetSharedContext()->m_wind->GetWindowSize();
 
-	int halfX = m_texture.getSize().x/ 2.0f;
-	int halfY = m_texture.getSize().y / 2.0f;
+	const float halfX = m_texture.getSize().x / 2.0f;
+	const float halfY = m_texture.getSize().y / 2.0f;
 
 	if (currPos.x + (m_speedDir.x * l_time.asSeconds()) - halfX < 0
 		|| currPos.x + (m_speedDir.x * l_time.asSeconds()) + halfX > windowSize.x)
